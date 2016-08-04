@@ -1,0 +1,14 @@
+{
+  "name": "lightbox",
+  "version": "1.0.0",
+  "description": "View thumbnail images in a lightbox",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/*"
+  },
+  "author": "Andy Archer <andrew.m.archer@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^3.0.0"
+  }
+}
