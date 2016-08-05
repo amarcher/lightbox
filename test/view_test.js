@@ -38,6 +38,11 @@ describe('View', function() {
     });
   });
 
+  describe('#renderThumbnails', function() {
+    it('should render thumbnails with the given thumbnailsData', function() {
+    });
+  });
+
   describe('#showLightboxForImage', function() {
     it('should show a lightbox with the given lightboxImageData', function() {
     });

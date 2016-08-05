@@ -41,6 +41,14 @@ describe('Model', function() {
     });
   });
 
+  describe('#getThumbnailsData', function() {
+    it('should return a Promise that resolves with thumbnailsData', function() {
+      return model.getThumbnailsData().then(function(thumbnailsData) {
+        assert.strictEqual(thumbnailsData, 'thumbnailsData');
+      });
+    });
+  });
+
   describe('#getLightboxImageData', function() {
     it('should return a Promise that resolves with imageData', function() {
       return model.getLightboxImageData(1234).then(function(lightboxImageData) {

@@ -11,6 +11,9 @@ View.prototype.bind = function(callbacks) {
 View.prototype.waitForImages = function() {
 };
 
+View.prototype.renderThumbnails = function(thumbnailsData) {
+};
+
 View.prototype.showLightboxForImage = function(lightboxImageData) {
 };
 
