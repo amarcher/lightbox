@@ -4,11 +4,17 @@
   "description": "View thumbnail images in a lightbox",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/*"
+    "test": "./node_modules/mocha/bin/mocha test/*",
+    "build": "browserify ./js/app.js -o ./static/bundle.js",
+    "watch": "watchify ./js/app.js -o ./static/bundle.js"
   },
   "author": "Andy Archer <andrew.m.archer@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "^3.0.0"
+    "browserify": "^13.1.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.0",
+    "sinon": "^1.17.5",
+    "watchify": "^3.7.0"
   }
 }
