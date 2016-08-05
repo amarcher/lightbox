@@ -32,4 +32,14 @@ describe('View', function() {
       assert.strictEqual(view._getLightboxImage, callbacks.getLightboxImage);
     });
   });
+
+  describe('#waitForImages', function() {
+    it('should replace content with a spinner', function() {
+    });
+  });
+
+  describe('#showLightboxForImage', function() {
+    it('should show a lightbox with the given lightboxImageData', function() {
+    });
+  });
 });

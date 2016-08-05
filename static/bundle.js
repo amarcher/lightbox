@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', app.onDomReady);
 var Controller = function(opts) {
   this.view = opts.view;
   this.model = opts.model;
+
+  this.init();
+};
+
+Controller.prototype.init = function() {
+  this.fetchImages = this.fetchImages.bind(this);
+  this.getLightboxImage = this.getLightboxImage.bind(this);
 };
 
 Controller.prototype.bindEvents = function() {
@@ -34,20 +41,43 @@ Controller.prototype.bindEvents = function() {
   });
 };
 
-Controller.prototype.fetchImages = function() {
-}.bind(this);
+Controller.prototype.fetchImages = function(keyword) {
+  this.view.waitForImages();
+  this.model.empty();
+  /* TODO: Add Ajax */
+};
 
-Controller.prototype.getLightboxImage = function() {
-}.bind(this);
+Controller.prototype.getLightboxImage = function(imageId) {
+  return this.model.getLightboxImageData(imageId).then(function(lightboxImageData) {
+    this.view.showLightboxForImage(lightboxImageData);
+  }.bind(this));
+};
 
 module.exports = Controller;
+
 },{}],3:[function(require,module,exports){
 'use strict';
 
 var Model = function(opts) {
-}
+  this._images = [];
+};
+
+Model.prototype.empty = function() {
+  this._images = [];
+};
+
+Model.prototype.populate = function(imageData) {
+  this._images = imageData;
+};
+
+Model.prototype.getLightboxImageData = function(imageId) {
+  return new Promise(function(resolve, reject) {
+    resolve('imageData');
+  });
+};
 
 module.exports = Model;
+
 },{}],4:[function(require,module,exports){
 'use strict';
 
@@ -59,5 +89,12 @@ View.prototype.bind = function(callbacks) {
   this._getLightboxImage = callbacks.getLightboxImage;
 };
 
+View.prototype.waitForImages = function() {
+};
+
+View.prototype.showLightboxForImage = function(lightboxImageData) {
+};
+
 module.exports = View;
+
 },{}]},{},[1]);
