@@ -4,6 +4,7 @@ var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 require('sinon-as-promised');
 var Model = require('../js/model');
+var fixtures = require('./utils/fixtures');
 
 describe('Model', function() {
   var model;
@@ -32,27 +33,79 @@ describe('Model', function() {
   });
 
   describe('#populate', function() {
-    var imageData = ['imageData'];
+    it('should set its _images property to the non-album images in imageData', function() {
+      model.populate(fixtures.imageData);
 
-    it('should set its _images property to an imageData', function() {
-      model.populate(imageData);
-
-      assert.deepEqual(model._images, imageData);
+      assert.deepEqual(model._images, [fixtures.image]);
     });
   });
 
   describe('#getThumbnailsData', function() {
+    beforeEach(() => {
+      model.populate(fixtures.imageData);
+    });
+
     it('should return a Promise that resolves with thumbnailsData', function() {
+      var image = fixtures.image;
+
       return model.getThumbnailsData().then(function(thumbnailsData) {
-        assert.strictEqual(thumbnailsData, 'thumbnailsData');
+        assert.deepEqual(thumbnailsData, [{
+          id: image.id,
+          link: image.link,
+          height: image.height,
+          width: image.width
+        }]);
       });
     });
   });
 
   describe('#getLightboxImageData', function() {
-    it('should return a Promise that resolves with imageData', function() {
-      return model.getLightboxImageData(1234).then(function(lightboxImageData) {
-        assert.strictEqual(lightboxImageData, 'imageData');
+    var image1 = Object.assign({}, fixtures.image, { id: 'image1' });
+    var image2 = Object.assign({}, fixtures.image, { id: 'image2' });
+    var image3 = Object.assign({}, fixtures.image, { id: 'image3' });
+
+    beforeEach(() => {
+      model.populate({
+        data: [image1, image2, image3]
+      });
+    });
+
+    it('should resolve with the expected image data for the first image in the set', function() {
+      return model.getLightboxImageData(image1.id).then(function(lightboxImageData) {
+        assert.deepEqual(lightboxImageData, {
+          id: image1.id,
+          link: image1.link,
+          height: image1.height,
+          width: image1.width,
+          nextImageId: image2.id,
+          prevImageId: image3.id
+        });
+      });
+    });
+
+    it('should resolve with the expected image data for a middle image in the set', function() {
+      return model.getLightboxImageData(image2.id).then(function(lightboxImageData) {
+        assert.deepEqual(lightboxImageData, {
+          id: image2.id,
+          link: image2.link,
+          height: image2.height,
+          width: image2.width,
+          nextImageId: image3.id,
+          prevImageId: image1.id
+        });
+      });
+    });
+
+    it('should resolve with the expected image data for a middle image in the set', function() {
+      return model.getLightboxImageData(image3.id).then(function(lightboxImageData) {
+        assert.deepEqual(lightboxImageData, {
+          id: image3.id,
+          link: image3.link,
+          height: image3.height,
+          width: image3.width,
+          nextImageId: image1.id,
+          prevImageId: image2.id
+        });
       });
     });
   });
