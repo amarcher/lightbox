@@ -9,7 +9,7 @@ Lightbox was written entirely in Vanilla Javascript and is tested using Mocha. S
 
 ## Setting up the Development Environment
 
-`git clone {this url}`
+`git clone https://github.com/amarcher/lightbox.git`
 
 `cd lightbox`
 
