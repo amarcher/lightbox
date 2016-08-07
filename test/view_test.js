@@ -268,6 +268,33 @@ describe('View', function() {
     });
   });
 
+  describe('#_createThumbnailImage', function() {
+    var img;
+    var div;
+
+    beforeEach(() => {
+      img = document.createElement('img');
+      div = document.createElement('div');
+      sinon.stub(document, 'createElement');
+      sinon.stub(img, 'addEventListener');
+      document.createElement.withArgs('img').returns(img);
+      document.createElement.withArgs('div').returns(div);
+    });
+
+    it('returns a thumbnail image div with correct properties', function() {
+      var thumbnailImage = view._createThumbnailImage(fixtures.thumbnailImage, 0);
+      assert.strictEqual(thumbnailImage.className, 'thumbnail-image');
+      assert.strictEqual(thumbnailImage.id, fixtures.thumbnailImage.id);
+      assert.strictEqual(thumbnailImage.style.backgroundImage, 'url(' + fixtures.thumbnailImage.link + ')');
+    });
+
+    it('adds an event listener to #applyLoadedClassName on load', function() {
+      view._createThumbnailImage(fixtures.thumbnailImage, 0);
+      sinonAssert.calledOnce(img.addEventListener);
+      sinonAssert.calledWith(img.addEventListener, 'load');
+    });
+  });
+
   describe('#_handleLightboxClick', function() {
     var evt;
 

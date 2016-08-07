@@ -9,6 +9,10 @@ var NEXT_CLASSNAME = 'next';
 var PREV_CLASSNAME = 'prev';
 var THUMBNAIL_SPIN_DELAY = 50;
 
+function applyLoadedClassName(thumbnailImage) {
+  thumbnailImage.className = LOADED_THUMBNAIL_IMAGE_CLASSNAME;
+}
+
 var View = function(opts) {
   this._searchForm = opts.searchForm;
   this._searchInput = opts.searchInput;
@@ -83,17 +87,15 @@ View.prototype._closeLightbox = function() {
 };
 
 View.prototype._createThumbnailImage = function(thumbnailData, index) {
-  var image = new Image();
-  image.src = thumbnailData.link;
+  var image = document.createElement('img');
   var thumbnailImage = document.createElement('div');
   thumbnailImage.className = THUMBNAIL_IMAGE_CLASSNAME;
-  thumbnailImage.style.backgroundImage = 'url("' + thumbnailData.link + '")';
   thumbnailImage.id = thumbnailData.id;
-  image.onload = function() {
-    setTimeout(function() {
-      thumbnailImage.className = LOADED_THUMBNAIL_IMAGE_CLASSNAME;
-    }, THUMBNAIL_SPIN_DELAY * index);
-  };
+  image.addEventListener('load', function() {
+    setTimeout(applyLoadedClassName, THUMBNAIL_SPIN_DELAY * index);
+  });
+  image.src = thumbnailData.link;
+  thumbnailImage.style.backgroundImage = 'url("' + thumbnailData.link + '")';
 
   return thumbnailImage;
 };
