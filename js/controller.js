@@ -20,7 +20,7 @@ Controller.prototype.init = function() {
 };
 
 Controller.prototype.bindEvents = function() {
-  this.view.bind({
+  this.view.bindCallbacks({
     fetchImages: this.fetchImages,
     getLightboxImage: this.getLightboxImage
   });

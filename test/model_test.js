@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var chaiAssert = require('chai').assert;
 var sinonAssert = require('sinon').assert;

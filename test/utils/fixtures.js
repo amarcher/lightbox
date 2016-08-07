@@ -68,18 +68,30 @@ var image = {
 
 var fixtures = {
   albumImage: albumImage,
+
   image: image,
+
   imageData: {
     data: [
       image,
       albumImage
     ]
   },
+
   thumbnailImage: {
     id: image.id,
     link: image.link,
     height: image.height,
     width: image.width
+  },
+
+  lightboxImageData: {
+    id: image.id,
+    link: image.link,
+    height: image.height,
+    width: image.width,
+    nextImageId: 'nextId',
+    prevImageId: 'prevId'
   }
 };
 

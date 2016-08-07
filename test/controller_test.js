@@ -1,10 +1,12 @@
+'use strict';
+
 var assert = require('assert');
 var chaiAssert = require('chai').assert;
 var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 require('sinon-as-promised');
 var Controller = require('../js/controller');
-var fixtures = require('./utils/fixtures')
+var fixtures = require('./utils/fixtures');
 var ajax = require('../js/utils/ajax');
 
 describe('Controller', function() {
@@ -20,7 +22,7 @@ describe('Controller', function() {
       getThumbnailsData: sinon.stub()
     };
     view = {
-      bind: sinon.stub(),
+      bindCallbacks: sinon.stub(),
       renderThumbnails: sinon.stub(),
       waitForImages: sinon.stub(),
       showLightboxForImage: sinon.stub()
@@ -47,9 +49,9 @@ describe('Controller', function() {
       controller.bindEvents();
     });
 
-    it('should call view.bind with callbacks', function() {
-      sinonAssert.calledOnce(view.bind);
-      sinonAssert.calledWith(view.bind, {
+    it('should call view.bindCallbacks with callbacks', function() {
+      sinonAssert.calledOnce(view.bindCallbacks);
+      sinonAssert.calledWith(view.bindCallbacks, {
         fetchImages: controller.fetchImages,
         getLightboxImage: controller.getLightboxImage
       });
