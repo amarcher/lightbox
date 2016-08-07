@@ -207,6 +207,11 @@ var LIGHTBOX_OVERLAY_CLASSNAME = 'lightbox-overlay';
 var NEXT_CLASSNAME = 'next';
 var PREV_CLASSNAME = 'prev';
 var THUMBNAIL_SPIN_DELAY = 50;
+var KEYCODES = {
+  NEXT: 39,
+  PREV: 37,
+  ESC: 27
+};
 
 function applyLoadedClassName(thumbnailImage) {
   thumbnailImage.className = LOADED_THUMBNAIL_IMAGE_CLASSNAME;
@@ -229,6 +234,7 @@ View.prototype.init = function() {
   this._openLightBox = this._openLightBox.bind(this);
   this._createThumbnailImage = this._createThumbnailImage.bind(this);
   this._handleLightboxClick = this._handleLightboxClick.bind(this);
+  this._handleKeyPress = this._handleKeyPress.bind(this);
 };
 
 View.prototype.bindCallbacks = function(callbacks) {
@@ -238,6 +244,7 @@ View.prototype.bindCallbacks = function(callbacks) {
   this._searchForm.addEventListener('submit', this._search);
   this._lightboxOverlay.addEventListener('click', this._handleLightboxClick);
   this._thumbnailContentArea.addEventListener('click', this._openLightBox);
+  document.addEventListener('keyup', this._handleKeyPress);
 };
 
 View.prototype.waitForImages = function() {
@@ -316,6 +323,22 @@ View.prototype._handleLightboxClick = function(event) {
   case LIGHTBOX_CLOSE_CLASSNAME:
     this._closeLightbox();
     break;
+  }
+};
+
+View.prototype._handleKeyPress = function(event) {
+  if (this._lightboxOpened) {
+    switch(event.keyCode) {
+    case KEYCODES.NEXT:
+      this._getLightboxImage(this._lightboxImageData.nextImageId);
+      break;
+    case KEYCODES.PREV:
+      this._getLightboxImage(this._lightboxImageData.prevImageId);
+      break;
+    case KEYCODES.ESC:
+      this._closeLightbox();
+      break;
+    }
   }
 };
 

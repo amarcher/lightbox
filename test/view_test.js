@@ -66,6 +66,7 @@ describe('View', function() {
       sinon.stub(searchForm, 'addEventListener');
       sinon.stub(lightboxOverlay, 'addEventListener');
       sinon.stub(thumbnailContentArea, 'addEventListener');
+      sinon.stub(document, 'addEventListener');
       view.bindCallbacks(callbacks);
     });
 
@@ -87,6 +88,11 @@ describe('View', function() {
     it('should add a listener to the thumbnailContentArea with #_openLightBox as a callback', function() {
       sinonAssert.calledOnce(thumbnailContentArea.addEventListener);
       sinonAssert.calledWith(thumbnailContentArea.addEventListener, 'click', view._openLightBox);
+    });
+
+    it('should add a listener to the document keyup event with #_handleKeyPress as a callback', function() {
+      sinonAssert.calledOnce(document.addEventListener);
+      sinonAssert.calledWith(document.addEventListener, 'keyup', view._handleKeyPress);
     });
   });
 
@@ -388,6 +394,99 @@ describe('View', function() {
 
       it('does not get a new lightbox image', function() {
         sinonAssert.notCalled(callbacks.getLightboxImage);
+      });
+    });
+  });
+
+  describe('#_handleKeyPress', function() {
+    var evt;
+
+    beforeEach(function() {
+      sinon.stub(view, '_closeLightbox');
+      view.bindCallbacks(callbacks);
+      evt = {};
+    });
+
+    context('with lightbox closed', function() {
+      beforeEach(function() {
+        evt.keyCode = 37;
+        view._handleKeyPress(evt);
+      });
+
+      it('does not close the lightbox', function() {
+        sinonAssert.notCalled(view._closeLightbox);
+      });
+
+      it('does not get a new lightbox image', function() {
+        sinonAssert.notCalled(callbacks.getLightboxImage);
+      });
+    });
+
+    context('with lightbox opened', function() {
+      beforeEach(function() {
+        view.showLightboxForImage(fixtures.lightboxImageData);
+      });
+
+      context('with an unspecified key', function() {
+        beforeEach(function() {
+          evt.keyCode = 31;
+          view._handleKeyPress(evt);
+        });
+
+        it('does not close the lightbox', function() {
+          sinonAssert.notCalled(view._closeLightbox);
+        });
+
+        it('does not get a new lightbox image', function() {
+          sinonAssert.notCalled(callbacks.getLightboxImage);
+        });
+      });
+
+      context('with next arrow', function() {
+        beforeEach(function() {
+          evt.keyCode = 39;
+          view._handleKeyPress(evt);
+        });
+
+        it('does not close the lightbox', function() {
+          sinonAssert.notCalled(view._closeLightbox);
+        });
+
+        it('gets a new lightbox image', function() {
+          sinonAssert.calledOnce(callbacks.getLightboxImage);
+          sinonAssert.calledWith(callbacks.getLightboxImage, fixtures.lightboxImageData.nextImageId);
+        });
+      });
+
+      context('with prev arrow', function() {
+        beforeEach(function() {
+          evt.keyCode = 37;
+          view._handleKeyPress(evt);
+        });
+
+        it('does not close the lightbox', function() {
+          sinonAssert.notCalled(view._closeLightbox);
+        });
+
+        it('gets a new lightbox image', function() {
+          sinonAssert.calledOnce(callbacks.getLightboxImage);
+          sinonAssert.calledWith(callbacks.getLightboxImage, fixtures.lightboxImageData.prevImageId);
+        });
+      });
+
+      context('with escape key', function() {
+        beforeEach(function() {
+          evt.keyCode = 27;
+          view._handleKeyPress(evt);
+        });
+
+        it('does closes the lightbox', function() {
+          sinonAssert.calledOnce(view._closeLightbox);
+        });
+
+        it('does not get a new lightbox image', function() {
+          sinonAssert.notCalled(callbacks.getLightboxImage);
+        });
       });
     });
   });
