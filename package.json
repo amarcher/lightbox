@@ -4,7 +4,8 @@
   "description": "View thumbnail images in a lightbox",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/*",
+    "style": "./node_modules/.bin/eslint js/*.js test/*.js",
+    "test": "./node_modules/mocha/bin/mocha test/*.js",
     "build": "browserify ./js/app.js -o ./static/bundle.js",
     "watch": "watchify ./js/app.js -o ./static/bundle.js"
   },
@@ -13,6 +14,7 @@
   "devDependencies": {
     "browserify": "^13.1.0",
     "chai": "^3.5.0",
+    "eslint": "^3.2.2",
     "jsdom": "9.4.1",
     "jsdom-global": "2.0.0",
     "mocha": "^3.0.0",

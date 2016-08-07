@@ -3,7 +3,7 @@
 var ajax = require('./utils/ajax');
 
 var IMGUR_CLIENT_ID = 'f086e2b1e531860';
-var IMGUR_SEARCH_URI = 'https://api.imgur.com/3/gallery/search/top/'
+var IMGUR_SEARCH_URI = 'https://api.imgur.com/3/gallery/search/top/';
 
 var Controller = function(opts) {
   this.view = opts.view;
@@ -52,8 +52,8 @@ Controller.prototype._handleImages = function(imageData) {
     }.bind(this));
 };
 
-Controller.prototype._handleError = function(err) {
-  console.log(err);
+Controller.prototype._handleError = function() {
+  this.view.renderThumbnails([]);
 };
 
 module.exports = Controller;

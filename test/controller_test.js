@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert');
-var chaiAssert = require('chai').assert;
 var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 require('sinon-as-promised');
@@ -77,10 +76,10 @@ describe('Controller', function() {
     it('calls ajax#get with correct arguments', function() {
       sinonAssert.calledOnce(ajax.get);
       sinonAssert.calledWith(ajax.get, 'https://api.imgur.com/3/gallery/search/top/', {
-          q: 'title: sharks'
-        }, {
-          Authorization: 'Client-ID f086e2b1e531860'
-        });
+        q: 'title: sharks'
+      }, {
+        Authorization: 'Client-ID f086e2b1e531860'
+      });
     });
 
     it('calls #_handleImages with result', function() {
@@ -94,7 +93,7 @@ describe('Controller', function() {
       return controller.fetchImages('sharks').then(function() {
         sinonAssert.calledOnce(controller._handleError);
       });
-    })
+    });
   });
 
   describe('#getLightboxImage', function() {
@@ -126,7 +125,7 @@ describe('Controller', function() {
   });
 
   describe('#_handleImages', function() {
-    beforeEach(() => {
+    beforeEach(function() {
       model.getThumbnailsData.resolves([fixtures.thumbnailImage]);
       return controller._handleImages(fixtures.imageData);
     });

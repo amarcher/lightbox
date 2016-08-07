@@ -1,6 +1,8 @@
 'use strict';
 
-var Model = function(opts) {
+var Promise = require('es6-promise').Promise;
+
+var Model = function() {
   this._images = [];
 };
 
@@ -24,14 +26,14 @@ Model.prototype.getThumbnailsData = function() {
     };
   });
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     resolve(thumbnailsData);
   });
 };
 
 Model.prototype.getLightboxImageData = function(imageId) {
   var imageIndex = this._images.findIndex(function(image) {
-    return image.id === imageId
+    return image.id === imageId;
   });
   var image = this._images[imageIndex];
   var lastPossibleIndex = this._images.length - 1;
@@ -40,7 +42,7 @@ Model.prototype.getLightboxImageData = function(imageId) {
   var nextImageId = this._images[nextImageIndex].id;
   var prevImageId = this._images[prevImageIndex].id;
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     resolve({
       id: image.id,
       link: image.link,

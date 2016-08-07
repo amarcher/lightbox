@@ -6,7 +6,7 @@ var chaiAssert = require('chai').assert;
 var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 var View = require('../js/view');
-var fixtures = require('./utils/fixtures')
+var fixtures = require('./utils/fixtures');
 
 describe('View', function() {
   var view;
@@ -189,7 +189,7 @@ describe('View', function() {
     });
 
     context('when the lightbox is closed', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         view._lightboxOpened = false;
         view.showLightboxForImage(fixtures.lightboxImageData);
       });
@@ -225,11 +225,11 @@ describe('View', function() {
         target: {
           id: '1234'
         }
-      }
+      };
     });
 
     context('when passed an event with the loaded thumbnail image classname', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'thumbnail-image loaded';
         view._openLightBox(evt);
       });
@@ -241,7 +241,7 @@ describe('View', function() {
     });
 
     context('when passed an event that does not have the loaded thumbnail image classname', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'thumbnail-image';
         view._openLightBox(evt);
       });
@@ -253,7 +253,7 @@ describe('View', function() {
   });
 
   describe('#_closeLightbox', function() {
-    beforeEach(() => {
+    beforeEach(function() {
       sinon.stub(document.body, 'removeChild');
       view._closeLightbox();
     });
@@ -272,7 +272,7 @@ describe('View', function() {
     var img;
     var div;
 
-    beforeEach(() => {
+    beforeEach(function() {
       img = document.createElement('img');
       div = document.createElement('div');
       sinon.stub(document, 'createElement');
@@ -298,7 +298,7 @@ describe('View', function() {
   describe('#_handleLightboxClick', function() {
     var evt;
 
-    beforeEach(() => {
+    beforeEach(function() {
       sinon.stub(view, '_closeLightbox');
       view.bindCallbacks(callbacks);
       view.showLightboxForImage(fixtures.lightboxImageData);
@@ -310,7 +310,7 @@ describe('View', function() {
     });
 
     context('with an unspecified target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'default';
         view._handleLightboxClick(evt);
       });
@@ -329,7 +329,7 @@ describe('View', function() {
     });
 
     context('with the lightbox as a target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'lightbox';
         view._handleLightboxClick(evt);
       });
@@ -348,7 +348,7 @@ describe('View', function() {
     });
 
     context('with "next" as a target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'next';
         view._handleLightboxClick(evt);
       });
@@ -368,7 +368,7 @@ describe('View', function() {
     });
 
     context('with "prev" as a target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'prev';
         view._handleLightboxClick(evt);
       });
@@ -388,7 +388,7 @@ describe('View', function() {
     });
 
     context('with lightbox overlay as a target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'lightbox-overlay';
         view._handleLightboxClick(evt);
       });
@@ -403,7 +403,7 @@ describe('View', function() {
     });
 
     context('with lightbox close button as a target', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         evt.target.className = 'lightbox-close';
         view._handleLightboxClick(evt);
       });

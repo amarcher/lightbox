@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var chaiAssert = require('chai').assert;
-var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 require('sinon-as-promised');
 var Model = require('../js/model');
@@ -43,7 +42,7 @@ describe('Model', function() {
   });
 
   describe('#getThumbnailsData', function() {
-    beforeEach(() => {
+    beforeEach(function() {
       model.populate(fixtures.imageData);
     });
 
@@ -66,7 +65,7 @@ describe('Model', function() {
     var image2 = Object.assign({}, fixtures.image, { id: 'image2' });
     var image3 = Object.assign({}, fixtures.image, { id: 'image3' });
 
-    beforeEach(() => {
+    beforeEach(function() {
       model.populate({
         data: [image1, image2, image3]
       });

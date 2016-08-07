@@ -9,7 +9,7 @@ function stringify(params) {
 }
 
 var Ajax = {
-  get(url, params, headers) {
+  get: function(url, params, headers) {
     return fetch(url + '?' + stringify(params), {
       headers: headers
     }).then(function(resp) {

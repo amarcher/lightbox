@@ -52,7 +52,7 @@ View.prototype.renderThumbnails = function(thumbnailsData) {
     content = this._noResultsErrorMessage;
   } else {
     content = document.createDocumentFragment();
-    this._thumbnailImages = thumbnailsData.map(this._createThumbnailImage)
+    this._thumbnailImages = thumbnailsData.map(this._createThumbnailImage);
     this._thumbnailImages.forEach(content.appendChild.bind(content));
   }
   this._thumbnailContentArea.innerHTML = '';
@@ -102,21 +102,21 @@ View.prototype._createThumbnailImage = function(thumbnailData, index) {
 
 View.prototype._handleLightboxClick = function(event) {
   switch(event.target.className) {
-    case LIGHTBOX_CLASSNAME:
-      event.stopPropagation();
-      break;
-    case NEXT_CLASSNAME:
-      event.stopPropagation();
-      this._getLightboxImage(this._lightboxImageData.nextImageId);
-      break;
-    case PREV_CLASSNAME:
-      event.stopPropagation();
-      this._getLightboxImage(this._lightboxImageData.prevImageId);
-      break;
-    case LIGHTBOX_OVERLAY_CLASSNAME:
-    case LIGHTBOX_CLOSE_CLASSNAME:
-      this._closeLightbox();
-      break;
+  case LIGHTBOX_CLASSNAME:
+    event.stopPropagation();
+    break;
+  case NEXT_CLASSNAME:
+    event.stopPropagation();
+    this._getLightboxImage(this._lightboxImageData.nextImageId);
+    break;
+  case PREV_CLASSNAME:
+    event.stopPropagation();
+    this._getLightboxImage(this._lightboxImageData.prevImageId);
+    break;
+  case LIGHTBOX_OVERLAY_CLASSNAME:
+  case LIGHTBOX_CLOSE_CLASSNAME:
+    this._closeLightbox();
+    break;
   }
 };
 
