@@ -19,5 +19,9 @@
     "sinon": "^1.17.5",
     "sinon-as-promised": "^4.0.2",
     "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "unsplash-js": "^4.2.0",
+    "whatwg-fetch": "^1.0.0"
   }
 }

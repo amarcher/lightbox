@@ -74,6 +74,12 @@ var fixtures = {
       image,
       albumImage
     ]
+  },
+  thumbnailImage: {
+    id: image.id,
+    link: image.link,
+    height: image.height,
+    width: image.width
   }
 };
 

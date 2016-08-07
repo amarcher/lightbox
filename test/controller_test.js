@@ -4,6 +4,8 @@ var sinonAssert = require('sinon').assert;
 var sinon = require('sinon').sandbox.create();
 require('sinon-as-promised');
 var Controller = require('../js/controller');
+var fixtures = require('./utils/fixtures')
+var ajax = require('../js/utils/ajax');
 
 describe('Controller', function() {
   var controller;
@@ -13,10 +15,13 @@ describe('Controller', function() {
   beforeEach(function() {
     model = {
       empty: sinon.stub(),
-      getLightboxImageData: sinon.stub()
+      populate: sinon.stub(),
+      getLightboxImageData: sinon.stub(),
+      getThumbnailsData: sinon.stub()
     };
     view = {
       bind: sinon.stub(),
+      renderThumbnails: sinon.stub(),
       waitForImages: sinon.stub(),
       showLightboxForImage: sinon.stub()
     };
@@ -24,6 +29,8 @@ describe('Controller', function() {
       model: model,
       view: view
     });
+
+    sinon.stub(ajax, 'get');
   });
 
   afterEach(function() {
@@ -51,7 +58,10 @@ describe('Controller', function() {
 
   describe('#fetchImages', function() {
     beforeEach(function() {
-      controller.fetchImages('sharks');
+      sinon.stub(controller, '_handleImages');
+      sinon.stub(controller, '_handleError');
+      ajax.get.resolves(fixtures.imageData);
+      return controller.fetchImages('sharks');
     });
 
     it('calls view#waitForImages', function() {
@@ -61,6 +71,28 @@ describe('Controller', function() {
     it('calls model#empty', function() {
       sinonAssert.calledOnce(model.empty);
     });
+
+    it('calls ajax#get with correct arguments', function() {
+      sinonAssert.calledOnce(ajax.get);
+      sinonAssert.calledWith(ajax.get, 'https://api.imgur.com/3/gallery/search/top/', {
+          q: 'title: sharks'
+        }, {
+          Authorization: 'Client-ID f086e2b1e531860'
+        });
+    });
+
+    it('calls #_handleImages with result', function() {
+      sinonAssert.calledOnce(controller._handleImages);
+      sinonAssert.calledWith(controller._handleImages, fixtures.imageData);
+    });
+
+    it('calls #_handleError', function() {
+      ajax.get.rejects('error');
+
+      return controller.fetchImages('sharks').then(function() {
+        sinonAssert.calledOnce(controller._handleError);
+      });
+    })
   });
 
   describe('#getLightboxImage', function() {
@@ -88,6 +120,27 @@ describe('Controller', function() {
         sinonAssert.calledOnce(view.showLightboxForImage);
         sinonAssert.calledWith(view.showLightboxForImage, lightBoxImageData);
       });
+    });
+  });
+
+  describe('#_handleImages', function() {
+    beforeEach(() => {
+      model.getThumbnailsData.resolves([fixtures.thumbnailImage]);
+      return controller._handleImages(fixtures.imageData);
+    });
+
+    it('calls model#populate with response', function() {
+      sinonAssert.calledOnce(model.populate);
+      sinonAssert.calledWith(model.populate, fixtures.imageData);
+    });
+
+    it('calls model#getThumbnailsData', function() {
+      sinonAssert.calledOnce(model.getThumbnailsData);
+    });
+
+    it('calls view#renderThumbnails with result', function() {
+      sinonAssert.calledOnce(model.getThumbnailsData);
+      sinonAssert.calledWith(view.renderThumbnails, [fixtures.thumbnailImage]);
     });
   });
 });
