@@ -4,7 +4,13 @@ var Controller = require('./controller');
 var Model = require('./model');
 var View = require('./view');
 
-var App = function() {};
+var App = function() {
+  this.init();
+};
+
+App.prototype.init = function() {
+  this.onDomReady = this.onDomReady.bind(this);
+};
 
 App.prototype.onDomReady = function() {
   var searchForm = document.getElementsByClassName('search-form')[0];
@@ -15,7 +21,8 @@ App.prototype.onDomReady = function() {
   var noResultsErrorMessage = this.getElementFromTemplate('no-results-error', 'content-template');
   var spinner = this.getElementFromTemplate('spinner', 'content-template');
 
-  var view = new View({
+  this.model = new Model();
+  this.view = new View({
     searchForm: searchForm,
     searchInput: searchInput,
     thumbnailContentArea: thumbnailContentArea,
@@ -25,12 +32,12 @@ App.prototype.onDomReady = function() {
     spinner: spinner
   });
 
-  var controller = new Controller({
-    model: new Model(),
-    view: view
+  this.controller = new Controller({
+    model: this.model,
+    view: this.view
   });
 
-  controller.bindEvents();
+  this.controller.bindEvents();
 };
 
 App.prototype.getElementFromTemplate = function(elementClassName, templateClassName) {
@@ -41,6 +48,6 @@ App.prototype.getElementFromTemplate = function(elementClassName, templateClassN
 };
 
 var app = new App();
-document.addEventListener('DOMContentLoaded', app.onDomReady.bind(app));
+document.addEventListener('DOMContentLoaded', app.onDomReady);
 
-module.exports = App;
+module.exports = app;

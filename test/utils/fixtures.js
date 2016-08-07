@@ -66,8 +66,37 @@ var image = {
   width: 718
 };
 
+var html = '\
+  <header class="header">\
+    <span class="logo">Lightbox</span>\
+    <form class="search-form">\
+      <input class="search-input" placeholder="Search" type="text" />\
+      <button class="search-button">\
+        Go!\
+      </button>\
+    </form>\
+  </header>\
+  <section class="content-area">\
+    <div class="thumbnail-content-area">\
+    </div>\
+  </section>\
+  <div class="hidden lightbox-template content-template">\
+    <div class="lightbox-overlay">\
+      <div class="lightbox">\
+        <a href="javascript:void(0)" class="lightbox-close">X</a>\
+        <a href="javascript:void(0)" class="prev">◀</a>\
+        <a href="javascript:void(0)" class="next">▶</a>\
+        <img class="lightbox-image" />\
+      </div>\
+    </div>\
+    <div class="error no-results-error">Found no images for that search term. Please try a different one.</div>\
+    <div class="spinner"></div>\
+  </div>';
+
 var fixtures = {
   albumImage: albumImage,
+
+  html: html,
 
   image: image,
 
