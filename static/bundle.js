@@ -241,7 +241,7 @@ View.prototype.renderThumbnails = function(thumbnailsData) {
     this._thumbnailImages = thumbnailsData.map(this._createThumbnailImage)
     this._thumbnailImages.forEach(content.appendChild.bind(content));
   }
-
+  this._thumbnailContentArea.innerHTML = '';
   this._thumbnailContentArea.appendChild(content);
 };
 
@@ -273,16 +273,19 @@ View.prototype._closeLightbox = function() {
 };
 
 View.prototype._createThumbnailImage = function(thumbnailData, index) {
-  var image = new Image(200, 200);
+  var image = new Image();
   image.src = thumbnailData.link;
-  image.className = THUMBNAIL_IMAGE_CLASSNAME;
-  image.id = thumbnailData.id;
+  var thumbnailImage = document.createElement('div');
+  thumbnailImage.className = THUMBNAIL_IMAGE_CLASSNAME;
+  thumbnailImage.style.backgroundImage = 'url("' + thumbnailData.link + '")';
+  thumbnailImage.id = thumbnailData.id;
   image.onload = function() {
     setTimeout(function() {
-      image.className = LOADED_THUMBNAIL_IMAGE_CLASSNAME;
+      thumbnailImage.className = LOADED_THUMBNAIL_IMAGE_CLASSNAME;
     }, THUMBNAIL_SPIN_DELAY * index);
   };
-  return image;
+
+  return thumbnailImage;
 };
 
 View.prototype._handleLightboxClick = function(event) {

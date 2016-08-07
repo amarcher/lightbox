@@ -43,16 +43,33 @@ body {
 }
 
 .thumbnail-image {
+  display: inline-block;
   position: relative;
   transform: rotateY(180deg);
   transition: transform 0.8s cubic-bezier(.47, 1.01, .71, 1.22);
   transform-style: preserve-3d;
   backface-visibility: hidden;
   margin: 2px;
+  height: 200px;
+  width: 200px;
+  background-size: cover;
 }
 
 .thumbnail-image.loaded {
   transform: rotateY(0deg);
+}
+
+.thumbnail-image:after {
+  content: '';
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #303030;
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .lightbox-overlay {
@@ -111,4 +128,26 @@ body {
 
 .error {
   color: #FFF;
+}
+
+.spinner {
+  border: 2px #d4d4d4 solid;
+  border-radius: 50%;
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: #FFF;
+  animation: rotate 1s infinite linear;
+  margin: 24px auto;
+  backface-visibility: hidden;
+  height: 200px;
+  width: 200px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
 }
