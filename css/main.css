@@ -1,9 +1,9 @@
 html,
 body {
-  height: 100%;
-  margin: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  margin: 0;
 }
 
 .header {
@@ -28,9 +28,9 @@ body {
 }
 
 .content-area {
-  flex: 1;
-  display: flex;
   background-color: #000;
+  display: flex;
+  flex: 1;
   overflow: auto;
 }
 
@@ -38,21 +38,21 @@ body {
   flex: 1;
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
   padding: 12px;
+  text-align: center;
 }
 
 .thumbnail-image {
+  backface-visibility: hidden;
+  background-size: cover;
   display: inline-block;
+  height: 200px;
+  margin: 2px;
   position: relative;
   transform: rotateY(180deg);
-  transition: transform 0.8s cubic-bezier(.47, 1.01, .71, 1.22);
   transform-style: preserve-3d;
-  backface-visibility: hidden;
-  margin: 2px;
-  height: 200px;
+  transition: transform 0.8s cubic-bezier(.47, 1.01, .71, 1.22);
   width: 200px;
-  background-size: cover;
 }
 
 .thumbnail-image.loaded {
@@ -60,57 +60,57 @@ body {
 }
 
 .thumbnail-image:after {
-  content: '';
-  right: 0px;
-  bottom: 0px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
   background-color: #303030;
+  backface-visibility: hidden;
+  content: '';
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
   transform: rotateY(180deg);
   transform-style: preserve-3d;
-  backface-visibility: hidden;
 }
 
 .lightbox-overlay {
-  position:fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .lightbox {
-  position: relative;
+  background-color: #FFF;
+  border-radius: 25px;
   margin: 0 auto;
   padding: 25px;
-  border-radius: 25px;
-  background-color: #FFF;
+  position: relative;
 }
 
 .lightbox-image {
-  max-width: 80vh;
-  max-height: 80vh;
-  margin: 0 auto;
-  padding: 25px;
-  border-radius: 10px;
   background-color: #FFF;
+  border-radius: 10px;
+  padding: 25px;
+  max-height: 80vh;
+  max-width: 80vh;
+  margin: 0 auto;
 }
 
 .lightbox-close,
 .next,
 .prev {
+  color: #000;
   position: absolute;
   text-decoration: none;
-  color: #000;
 }
 
 .lightbox-close {
-  top: 20px;
   right: 20px;
+  top: 20px;
 }
 
 .next, .prev {
@@ -131,14 +131,14 @@ body {
 }
 
 .spinner {
-  border: 2px #d4d4d4 solid;
-  border-radius: 50%;
-  border-color: rgba(255, 255, 255, 0.3);
-  border-top-color: #FFF;
   animation: rotate 1s infinite linear;
-  margin: 24px auto;
   backface-visibility: hidden;
+  border: 2px #d4d4d4 solid;
+  border-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #FFF;
   height: 200px;
+  margin: 24px auto;
   width: 200px;
 }
 
