@@ -92,7 +92,7 @@ View.prototype._createThumbnailImage = function(thumbnailData, index) {
   thumbnailImage.className = THUMBNAIL_IMAGE_CLASSNAME;
   thumbnailImage.id = thumbnailData.id;
   image.addEventListener('load', function() {
-    setTimeout(applyLoadedClassName, THUMBNAIL_SPIN_DELAY * index);
+    setTimeout(applyLoadedClassName.bind(null, thumbnailImage), THUMBNAIL_SPIN_DELAY * index);
   });
   image.src = thumbnailData.link;
   thumbnailImage.style.backgroundImage = 'url("' + thumbnailData.link + '")';
