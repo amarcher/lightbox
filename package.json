@@ -6,8 +6,8 @@
   "scripts": {
     "style": "./node_modules/.bin/eslint js/*.js test/*.js",
     "test": "./node_modules/mocha/bin/mocha test/*.js",
-    "build": "browserify ./js/app.js -o ./static/bundle.js",
-    "watch": "watchify ./js/app.js -o ./static/bundle.js"
+    "build": "node ./node_modules/browserify/bin/cmd.js ./js/app.js -o ./static/bundle.js",
+    "watch": "node ./node_modules/watchify/bin/cmd.js ./js/app.js -o ./static/bundle.js"
   },
   "author": "Andy Archer <andrew.m.archer@gmail.com>",
   "license": "ISC",
