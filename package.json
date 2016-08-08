@@ -23,7 +23,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "unsplash-js": "^4.2.0",
+    "es6-promise": "^3.2.1",
     "whatwg-fetch": "^1.0.0"
   }
 }
